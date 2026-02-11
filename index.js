@@ -48,3 +48,23 @@ app.get("/block/:hash/txs", async (req, res) => {
         res.status(500).send("Error fetching block")
     }
 })
+
+app.get("/ui", async (req, res) => {
+    const blocks = await axios.get(
+        "https://blockstream.info/api/blocks"
+    )
+
+    let html = `<h1>Bitcoin  Explorer</h1>`
+
+    blocks.data.forEach(block => {
+        html += `
+            <div>
+                <a href="block/${block.id}">
+                    Block ${block.height}
+                </a>
+            </div>
+        `
+    })
+
+    res.send(html)
+})
