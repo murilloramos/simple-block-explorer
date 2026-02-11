@@ -35,3 +35,16 @@ app.get("/block/:hash", async (req, res) => {
         res.status(500).send("Error fetching block")
     }
 })
+
+app.get("/block/:hash/txs", async (req, res) => {
+    const { hash } = req.params
+
+    try {
+        const response = await axios.get(
+            `https://blockstream.info/api/block/${hash}/txs`
+        )
+        res.json(response.data)
+    } catch (err) {
+        res.status(500).send("Error fetching block")
+    }
+})
